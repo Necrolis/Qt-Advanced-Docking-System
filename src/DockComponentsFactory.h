@@ -21,6 +21,7 @@ class CDockAreaWidget;
 class CDockWidget;
 class CAutoHideTab;
 class CDockManager;
+class CDockContainerWidget;
 
 
 /**
