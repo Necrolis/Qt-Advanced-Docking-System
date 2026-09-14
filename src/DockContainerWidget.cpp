@@ -166,13 +166,13 @@ public:
 	 */
 	QSharedPointer<ads::CDockComponentsFactory> componentsFactory() const
 	{
-		if (!DockWidget || !DockWidget->dockManager())
+		if (!DockManager)
 		{
 			return CDockComponentsFactory::factory();
 		}
 		else
 		{
-			return DockWidget->dockManager()->componentsFactory();
+			return DockManager->componentsFactory();
 		}
     }	
 
