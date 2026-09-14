@@ -53,6 +53,13 @@ CDockAreaTitleBar* CDockComponentsFactory::createDockAreaTitleBar(CDockAreaWidge
 
 
 //============================================================================
+CDockAreaWidget* CDockComponentsFactory::createDockAreaWidget(ads::CDockManager* DockManager, ads::CDockContainerWidget* DockContainer) const 
+{
+	return new CDockAreaWidget(DockManager, DockContainer);
+}
+
+
+//============================================================================
 QSharedPointer<ads::CDockComponentsFactory> CDockComponentsFactory::factory()
 {
 	if (!DefaultFactory)

@@ -59,6 +59,7 @@
 #include "AutoHideDockContainer.h"
 #include "AutoHideSideBar.h"
 #include "AutoHideTab.h"
+#include "DockComponentsFactory.h"
 
 #include <functional>
 #include <iostream>
@@ -159,6 +160,21 @@ public:
 	 * Private data constructor
 	 */
 	DockContainerWidgetPrivate(CDockContainerWidget* _public);
+	
+	/**
+	 * Convenience function to ease access to dock manager components factory
+	 */
+	QSharedPointer<ads::CDockComponentsFactory> componentsFactory() const
+	{
+		if (!DockWidget || !DockWidget->dockManager())
+		{
+			return CDockComponentsFactory::factory();
+		}
+		else
+		{
+			return DockWidget->dockManager()->componentsFactory();
+		}
+    }	
 
 	/**
 	 * Adds dock widget to container and returns the dock area that contains
@@ -807,7 +823,7 @@ void DockContainerWidgetPrivate::moveToNewSection(QWidget* Widget, CDockAreaWidg
 	CDockAreaWidget* NewDockArea;
 	if (DroppedDockWidget)
 	{
-		NewDockArea = new CDockAreaWidget(DockManager, _this);
+		NewDockArea = componentsFactory()->createDockAreaWidget(DockManager, _this);
 		CDockAreaWidget* OldDockArea = DroppedDockWidget->dockAreaWidget();
 		if (OldDockArea)
 		{
@@ -943,7 +959,7 @@ void DockContainerWidgetPrivate::moveToContainer(QWidget* Widget, DockWidgetArea
 
 	if (DroppedDockWidget)
 	{
-		NewDockArea = new CDockAreaWidget(DockManager, _this);
+		NewDockArea = componentsFactory()->createDockAreaWidget(DockManager, _this);
 		CDockAreaWidget* OldDockArea = DroppedDockWidget->dockAreaWidget();
 		if (OldDockArea)
 		{
@@ -1321,7 +1337,7 @@ bool DockContainerWidgetPrivate::restoreChildNodes(CDockingStateReader& s,
 CDockAreaWidget* DockContainerWidgetPrivate::addDockWidgetToContainer(DockWidgetArea area,
 	CDockWidget* Dockwidget)
 {
-	CDockAreaWidget* NewDockArea = new CDockAreaWidget(DockManager, _this);
+	CDockAreaWidget* NewDockArea = componentsFactory()->createDockAreaWidget(DockManager, _this);
 	NewDockArea->addDockWidget(Dockwidget);
 	addDockArea(NewDockArea, area);
 	NewDockArea->updateTitleBarVisibility();
@@ -1444,7 +1460,7 @@ CDockAreaWidget* DockContainerWidgetPrivate::addDockWidgetToDockArea(DockWidgetA
 		return TargetDockArea;
 	}
 
-	CDockAreaWidget* NewDockArea = new CDockAreaWidget(DockManager, _this);
+	CDockAreaWidget* NewDockArea = componentsFactory()->createDockAreaWidget(DockManager, _this);
 	NewDockArea->addDockWidget(Dockwidget);
 	auto InsertParam = internal::dockAreaInsertParameters(area);
 

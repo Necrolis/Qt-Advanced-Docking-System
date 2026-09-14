@@ -216,7 +216,7 @@ CAutoHideDockContainer::CAutoHideDockContainer(CDockWidget* DockWidget, SideBarL
 	d->SideTabBarArea = area;
 	d->SideTab = d->componentsFactory()->createDockWidgetSideTab(nullptr);
 	connect(d->SideTab, &CAutoHideTab::pressed, this, &CAutoHideDockContainer::toggleCollapseState);
-	d->DockArea = new CDockAreaWidget(DockWidget->dockManager(), parent);
+	d->DockArea = d->componentsFactory()->createDockAreaWidget(DockWidget->dockManager(), parent);
 	d->DockArea->setObjectName("autoHideDockArea");
 	d->DockArea->setAutoHideDockContainer(this);
 

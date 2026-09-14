@@ -64,6 +64,12 @@ public:
 	 * new CDockAreaTitleBar(DockArea).
 	 */
 	virtual CDockAreaTitleBar* createDockAreaTitleBar(CDockAreaWidget* DockArea) const;
+	
+	/**
+	 * This default implementation just creates a dock area with
+	 * new CDockAreaWidget(DockManager, DockContainer).
+	 */
+	virtual CDockAreaWidget* createDockAreaWidget(ads::CDockManager* DockManager, ads::CDockContainerWidget* DockContainer) const;	
 
 	/**
 	 * This returns the default dock components factory instance.
